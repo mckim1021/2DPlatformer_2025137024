@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 1f;
-    public float jumpForce = 1.5f;
+    public float jumpForce = 2f;
     public Transform GroundCheck;
     public LayerMask groundLayer;
 
@@ -46,6 +49,14 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && Input.GetKey(KeyCode.D))
         {
             pAni.SetTrigger("RunAction");
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Respawn"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
